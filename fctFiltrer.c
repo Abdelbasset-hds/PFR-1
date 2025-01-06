@@ -12,6 +12,6 @@ int filtre(char *commande,char list[100][50]){
         }
         mot=strtok(NULL," ");
     }
-    return i ;
+    return i;
 
 }
