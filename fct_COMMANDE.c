@@ -13,7 +13,7 @@ int COMMANDE(){
     fopen("C:\\commandes.txt","a");
     for (int i = 0; i < nbrmot; i++){
         for (int j=0;j<27;j++){
-            if (strcmp(list[i], motCle[j]) == 0){
+            if ((strcmp(list[i], motCle[j]) == 0) || isdigit(list[i][0])) {
                 fprintf(commandes,"%s",list[i]);
 
             }
