@@ -2,11 +2,29 @@ import turtle
 import math
 import os
 import tkinter as tk
+import speech_recognition as sr
 from tkinter import font
 from PIL import Image, ImageTk
-import filter
+import filtre
 
 
+
+def reconaitre_la_voie () :
+    recognizer = sr.Recognizer()
+    with sr.Microphone() as source :
+        afficher_message("parler je vous ecoute")
+        try :
+            audio = recognizer.listen(source , timeout= 5)
+            text = recognizer.recognize_google(audio , language="fr-FR")
+            entry_commande.delete(0,tk.END)
+            entry_commande.insert(0,text)
+            
+        except sr.WaitTimeoutError : 
+            afficher_message("aucun son detecté")
+        except sr.UnknownValueError :
+            afficher_message("Désolé je n'est pas compris")
+        except sr.RequestError as e :
+            afficher_message(f"Erreur avec le service de reconnaissance vocale : {e}")   
 
 
 
@@ -47,7 +65,7 @@ def afficher_message(message) :
 
 def deplacement() :
       commande = entry_commande.get()
-      commande_filtre = filter.filtre(commande)
+      commande_filtre = filtre.filtre(commande)
       if not commande :
           afficher_message("veuillez entrer une commande")
           return
@@ -113,7 +131,7 @@ else :
 spicify_font = font.Font(family = "Times New Roman",weight="bold",size=14)
 tk.Label(frame_commande, text="Entez votres commandes", font=spicify_font,bg ="dodgerblue2",fg="white").pack(pady=20)
 
-
+tk.Button(frame_commande,text="vocale",command=reconaitre_la_voie).pack(pady=10)
 entry_commande = tk.Entry(frame_commande, width = 50, font=("Ariel",10))
 entry_commande.pack(pady=20)
 tk.Button(frame_commande, text="valider",command=deplacement).pack(pady=20)
