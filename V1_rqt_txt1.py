@@ -1,13 +1,18 @@
 import turtle
+
+commandes_avancer = ["avance", "avancer", "marcher", "progresse", "va", "bouge", "vas-y", "en avant", "continue", "déplace", "allons-y"]
+commandes_tourner_gauche = ["tourne à gauche", "retourne à gauche", "tourner à gauche"]
+commandes_tourner_droite = ["tourne à droite", "retourne à droite", "tourner à droite"]
+
 def executer_commande_simple(texte):
     texte = texte.lower()
-    if texte == "avance":
+    if texte in commandes_avancer:
         turtle.forward(100)
     elif texte == "recule":
         turtle.backward(100)
-    elif texte == "tourne à gauche":
+    elif texte in commandes_tourner_gauche:
         turtle.left(90)
-    elif texte == "tourne à droite":
+    elif texte in commandes_tourner_droite:
         turtle.right(90)
     elif texte == "arrête":
         print("Robot arrêté.")
@@ -25,4 +30,5 @@ def main():
             break
         executer_commande_simple(texte)
     turtle.done()
+
 main()
