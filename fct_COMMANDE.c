@@ -108,4 +108,5 @@ void COMMANDE(){
 
 int main(){
     COMMANDE();
+    return 0;
 }
