@@ -60,7 +60,7 @@ void COMMANDE(){
         }
         for ( j=0;j<4;j++){
             if ((strcmp(list[i], motCleTourner[j]) == 0)) {
-                if (i + 2 < nbrmot &&strcmp(list[i + 2], "droite")){
+                if (i + 2 < nbrmot &&strcmp(list[i + 2], "droite")==0){
                     fprintf(commandes,"%s ,","tourne_dr");
                     if (i + 3 < nbrmot && estEntier(list[i+3])) {
                         fprintf(commandes,"%s ,",list[i+3]);
@@ -72,7 +72,7 @@ void COMMANDE(){
                         fprintf(commandes,"%s ,","None");
                     }
                 }
-                else if (i + 2 < nbrmot &&strcmp(list[i + 2], "gauche")){
+                else if (i + 2 < nbrmot &&strcmp(list[i + 2], "gauche")==0){
                     fprintf(commandes,"%s ,","tourne_gch");
                     if (i + 4 < nbrmot && estEntier(list[i+4])) {
                         fprintf(commandes,"%s ,",list[i+4]);
@@ -99,8 +99,6 @@ void COMMANDE(){
 
             }
         }
-
-
     }
     fclose(commandes);
 }
