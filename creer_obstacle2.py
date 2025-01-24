@@ -1,35 +1,49 @@
 import turtle
 
-def create_obstacle(x, y, width, height, shape, color):
+def dessiner_obstacle(fichier): 
+    # oouvrir le fichier pour lire les donnees
+    with open(fichier, 'r') as f:
+        
+        largeur, hauteur = map(int, f.readline().split())
+        
+        pixels = []
+        for ligne in f:
+            pixels.extend(map(int, ligne.split()))
     
-    turtle.penup()  
-    turtle.goto(x, y)  
-    turtle.pendown()  
+   
+    screen = turtle.Screen()
+    screen.bgcolor("white")  # Fond de la fenêtre
 
-    turtle.fillcolor(color)  
-    turtle.begin_fill()  
+   
+    obstacle = turtle.Turtle()
+    obstacle.shape("turtle")
+    obstacle.speed(0)  
+    obstacle.penup() 
 
-    if shape == 'C':
-        turtle.circle(width / 2)  
-    elif shape == 'S':
-        for _ in range(4):
-            turtle.forward(width)  
-            turtle.right(90)
-    elif shape == 'R':
-        for _ in range(2):
-            turtle.forward(width)  
-            turtle.right(90)
-            turtle.forward(height)
-            turtle.right(90)
+    
+    taille_pixel = 20  
 
-    turtle.end_fill()  
+    x_start = -largeur * taille_pixel / 2
+    y_start = hauteur * taille_pixel / 2
 
-# Exemple d'utilisation
-if __name__ == "__main__":
-    turtle.speed(1)  
+    obstacle.setposition(x_start, y_start)
 
-    create_obstacle(0, 0, 100, 100, 'S', 'red')  # Un carré rouge
-    create_obstacle(-200, 0, 50, 50, 'C', 'blue')  # Un cercle bleu
-    create_obstacle(200, 0, 150, 100, 'R', 'green')  # Un rectangle vert
+    for i in range(hauteur):
+        for j in range(largeur):
+            pixel_valeur = pixels[i * largeur + j]
 
-    turtle.done()  
+            couleur = (pixel_valeur / 63, pixel_valeur / 63, pixel_valeur / 63)  
+            
+            obstacle.goto(x_start + j * taille_pixel, y_start - i * taille_pixel)
+
+            obstacle.fillcolor(couleur)  
+            obstacle.begin_fill()
+            obstacle.circle(taille_pixel / 2) 
+            obstacle.end_fill()
+
+    obstacle.hideturtle()
+
+    turtle.done()
+
+dessiner_obstacle("histogramme.txt")
+
