@@ -100,6 +100,7 @@ void COMMANDE(){
             }
         }
     }
+    fprintf(commandes,"\n");
     fclose(commandes);
 }
 
