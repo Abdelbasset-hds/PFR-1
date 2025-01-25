@@ -10,7 +10,7 @@ def draw_ball(color, x, y, radius):
     turtle.end_fill()
 
 def main():
-    with open('C:/Users/hp/Desktop/final/result.txt', 'r') as file:
+    with open('result.txt', 'r') as file:
         lines = file.readlines()
     
     num_balls = int(lines[0].strip())
