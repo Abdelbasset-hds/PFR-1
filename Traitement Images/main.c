@@ -2,24 +2,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "file_operations.h"
+
 
 int main(int argc, char *argv[]) {
-    if (argc < 2) {
-        printf("Usage: %s <nom_du_fichier>\n", argv[0]);
-        return 1;
-    }
 
-    char path[50];
-    snprintf(path, sizeof(path), "../IMG_300/%s.txt", argv[1]);
+    char path[1024];
+    snprintf(path, sizeof(path), "%s", argv[1]);
+
+    printf("Tentative d'ouverture du fichier : %s\n", path);
+    FILE* file = fopen(path, "rb");
+    if (!file) {
+        perror("Erreur lors de l'ouverture du fichier");
+        return -1;
+    }
 
     const ImageData image_data = extract_image_text_data(path);
 
     Clusters clusters = find_clusters(image_data);
+    update_binary_mask_with_largest_cluster(clusters);
     find_clusters_attributes(clusters);
     display_clusters(clusters);
 
-    FILE* file = fopen("../../result.txt", "w");
-    if (!file) {
+    FILE * file2 = fopen("../result.txt", "w");
+    if (!file2) {
         perror("❌ Error opening file.");
         return -1;
     }

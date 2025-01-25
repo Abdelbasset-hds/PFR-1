@@ -6,6 +6,7 @@
 #include "cluster.h"
 
 #include <stdlib.h>
+int directions[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
 Clusters init_clusters(void) {
     return NULL;
@@ -130,5 +131,85 @@ void free_clusters(const Clusters clusters) {
         if (temp->binary_mask != NULL)
             free(temp->binary_mask);
         free(temp);
+    }
+}
+
+
+
+int dfs(int** mask, int** visited, int height, int width, int x, int y) {
+    if (x < 0 || y < 0 || x >= height || y >= width || visited[x][y] || mask[x][y] == 0) {
+        return 0;
+    }
+
+    visited[x][y] = 1;
+    int size = 1;
+
+
+    for (int d = 0; d < 4; d++) {
+        size += dfs(mask, visited, height, width, x + directions[d][0], y + directions[d][1]);
+    }
+
+    return size;
+}
+
+void update_binary_mask_with_largest_cluster(Cluster* cluster) {
+    Clusters current = cluster;
+    while (current != NULL) {
+        int height = cluster->height;
+        int width = cluster->width;
+
+
+        int** visited = malloc(height * sizeof(int*));
+        for (int i = 0; i < height; i++) {
+        visited[i] = calloc(width, sizeof(int));
+        }
+
+        int largest_size = 0;
+        int largest_cluster_x = -1;
+        int largest_cluster_y = -1;
+
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (cluster->binary_mask[i][j] == 1 && !visited[i][j]) {
+                    int size = dfs(cluster->binary_mask, visited, height, width, i, j);
+                    if (size > largest_size) {
+                        largest_size = size;
+                        largest_cluster_x = i;
+                        largest_cluster_y = j;
+                    }
+                }
+            }
+        }
+
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                visited[i][j] = 0;
+            }
+        }
+
+
+        dfs(cluster->binary_mask, visited, height, width, largest_cluster_x, largest_cluster_y);
+
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (visited[i][j]) {
+                    cluster->binary_mask[i][j] = 1;
+                } else {
+                    cluster->binary_mask[i][j] = 0;
+                }
+            }
+        }
+
+        cluster->number_pixels = largest_size;
+
+
+        for (int i = 0; i < height; i++) {
+            free(visited[i]);
+        }
+        free(visited);
+        current = current->next;
     }
 }
