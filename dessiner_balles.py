@@ -1,30 +1,39 @@
 import turtle
 
-def draw_ball(color, x, y, radius):
-    turtle.penup()
-    turtle.goto(x, y - radius)
-    turtle.pendown()
-    turtle.color(color)
-    turtle.begin_fill()
-    turtle.circle(radius)
-    turtle.end_fill()
+color_map = {
+    "orange": "orange",
+    "jaune": "yellow",
+    "blue": "blue",
+    
+}
+
+
+def draw_circle(color, x, y, radius):
+    turtle.penup()  
+    turtle.goto(x, y - radius)  
+    turtle.pendown()  
+    turtle.color(color_map.get(color, "black"))  
+    turtle.begin_fill() 
+    turtle.circle(radius)  
+    turtle.end_fill() 
 
 def main():
-    with open('result.txt', 'r') as file:
+    turtle.setup(width=600, height=600)
+    turtle.title("Dessin des balles détectées")
+
+    with open("result.txt", "r") as file:
         lines = file.readlines()
-    
-    num_balls = int(lines[0].strip())
-    
-    turtle.title("Dessiner les balles")
-    turtle.speed(0)
-    turtle.hideturtle()
+        cluster_count = int(lines[0].strip())  # Nombre de clusters
+        for line in lines[1:]:
+            color, x, y, radius = line.strip().split()
+            x = int(x)
+            y = int(y)
+            radius = int(radius)
 
-    for i in range(1, num_balls + 1):
-        color, x, y, radius = lines[i].strip().split()
-        x, y, radius = int(x), int(y), int(radius)
-        draw_ball(color, x, y, radius)
+            draw_circle(color, x, y, radius)
 
-    turtle.done()
+    turtle.hideturtle()  
+    turtle.done()  
 
 if __name__ == "__main__":
     main()
