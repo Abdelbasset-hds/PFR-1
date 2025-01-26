@@ -126,19 +126,19 @@ void quantize_image(const ImageData image, const int n) {
 void get_thresholds(const Color color, int thresholds[6]) {
     switch (color) {
         case ORANGE:
-            thresholds[0] = 136; thresholds[1] = 250; // Red Min/Max
-            thresholds[2] = 27; thresholds[3] = 56; // Green Min/Max
+            thresholds[0] = 80; thresholds[1] = 255; // Red Min/Max
+            thresholds[2] = 16; thresholds[3] = 100; // Green Min/Max
             thresholds[4] = 0; thresholds[5] = 10; // Blue Min/Max
         break;
         case BLUE:
             thresholds[0] = 0; thresholds[1] = 10; // Red Min/Max
-            thresholds[2] = 21; thresholds[3] = 94; // Green Min/Max
+            thresholds[2] = 21; thresholds[3] = 30; // Green Min/Max
             thresholds[4] = 48; thresholds[5] = 255; // Blue Min/Max
         break;
         case YELLOW:
-            thresholds[0] = 200; thresholds[1] = 255; // Red Min/Max
-            thresholds[2] = 180; thresholds[3] = 255; // Green Min/Max
-            thresholds[4] = 0; thresholds[5] = 100; // Blue Min/Max
+            thresholds[0] = 150; thresholds[1] = 255; // Red Min/Max
+            thresholds[2] = 130; thresholds[3] = 255; // Green Min/Max
+            thresholds[4] = 13; thresholds[5] = 90; // Blue Min/Max
         break;
         default:;
     }
@@ -148,6 +148,12 @@ Clusters find_clusters(const ImageData image) {
     Clusters clusters = init_clusters();
     for (Color color = ORANGE; color <= YELLOW; color++) {
         int thresholds[6];
+        printf(" %d a",thresholds[0]);
+        printf(" %d a",thresholds[1]);
+        printf(" %d a",thresholds[2]);
+        printf(" %d a",thresholds[3]);
+        printf(" %d a",thresholds[4]);
+        printf(" %d a",thresholds[5]);
         int number_pixels = 0;
         get_thresholds(color, thresholds);
         int** binary_mask = malloc(image->height * sizeof(int*));
@@ -177,7 +183,9 @@ Clusters find_clusters(const ImageData image) {
                 }
             }
         }
-        if (number_pixels > 0) {
+        printf("\n nombre pixel : %d, color : %s \n",number_pixels, color_to_string(color));
+
+        if (number_pixels > 0 ) {
             clusters = add_cluster(clusters, image->width, image->height, number_pixels, binary_mask, color);
             if (!clusters) {
                 perror("❌ Error allocating memory for clusters. (2)");

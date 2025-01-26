@@ -19,6 +19,22 @@ int main(int argc, char *argv[]) {
 
     Clusters clusters = find_clusters(image_data);
     update_binary_mask_with_largest_cluster(clusters);
+	FILE* file3 = fopen("test", "w");
+    if (file3 == NULL) {
+        perror("Error opening file");
+    }
+
+    for (int i = 0; i < image_data->height; i++) {
+        for (int j = 0; j < image_data->width; j++) {
+            fprintf(file3, "%d ", clusters->binary_mask[i][j]);
+        }
+        fprintf(file3, "\n");
+    }
+
+
+    fclose(file3);
+
+    fclose(file);
     find_clusters_attributes(clusters);
     display_clusters(clusters);
 
