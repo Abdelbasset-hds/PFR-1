@@ -44,7 +44,7 @@ Clusters init_clusters(void);
  * @param color The color associated with the cluster (from the `Color` enum).
  * @return The updated linked list of clusters, or NULL on error.
  */
-Clusters add_cluster(const Clusters clusters, const int width, const int height, const int number_pixels, const int** binary_mask, const Color color);
+Clusters add_cluster(const Clusters clusters, const int width, const int height, const int number_pixels, int** binary_mask, const Color color);
 
 /**
  * @brief Converts a `Color` enum value to its corresponding string representation.
