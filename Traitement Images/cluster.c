@@ -153,6 +153,7 @@ int dfs(int** mask, int** visited, int height, int width, int x, int y) {
 
 void update_binary_mask_with_largest_cluster(Cluster* cluster) {
     Clusters current = cluster;
+
     while (current != NULL) {
         int height = cluster->height;
         int width = cluster->width;
