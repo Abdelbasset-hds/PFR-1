@@ -12,8 +12,7 @@ Clusters init_clusters(void) {
     return NULL;
 }
 
-Clusters add_cluster(const Clusters clusters, const int width, const int height, const int number_pixels,
-                    const int** binary_mask, const Color color) {
+Clusters add_cluster(const Clusters clusters, const int width, const int height, const int number_pixels, int** binary_mask, const Color color) {
     const Clusters new_clusters = malloc(sizeof(Cluster));
     if (!new_clusters) {
         perror("❌ Error allocating memory for clusters.");
