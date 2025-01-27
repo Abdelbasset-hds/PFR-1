@@ -33,6 +33,7 @@ void COMMANDE(){
     char list[100][50];
     char motCleAvancer[11][10]={"avance", "avancer", "marcher", "progresse", "va", "bouge", "vas-y", "en avant", "continue", "déplace", "allons-y"};
     char motCleTourner[4][10]={"tourner","retourner","tourne","retourne"};
+    char motCleObjet[7][60]={"va","balle","rouge","bleu","bleu","jaune","orange"};
     int i,j;
     printf("Entrez votre commande: ");
     fgets(commande, sizeof(commande),stdin);
@@ -99,15 +100,18 @@ void COMMANDE(){
 
             }
         }
+        for ( j=0;j<7;j++){
+            if ((strcmp(list[i], motCleObjet[j]) == 0)) {
+                fprintf(commandes,"%s ,",list[i]);
+            }
+        }
+
     }
     fprintf(commandes,"\n");
     fclose(commandes);
 }
-
-
-
-
 int main(){
     COMMANDE();
     return 0;
 }
+
