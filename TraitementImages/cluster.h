@@ -62,7 +62,7 @@ int number_clusters(const Clusters clusters);
  *
  * @param clusters Pointer to the head of the clusters linked list.
  */
-void find_clusters_attributes(const Clusters clusters);
+Clusters find_clusters_attributes(Clusters clusters);
 
 /**
  * @brief Displays the information of each cluster in the linked list.

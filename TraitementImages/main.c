@@ -9,35 +9,12 @@ int main(int argc, char *argv[]) {
     snprintf(path, sizeof(path), "%s", argv[1]);
 
     printf("Tentative d'ouverture du fichier : %s\n", path);
+
     FILE* file = fopen(path, "rb");
     if (!file) {
-        perror("Erreur lors de l'ouverture du fichier");
+        perror("❌ Erreur lors de l'ouverture du fichier pour l'écriture.");
         return -1;
     }
-
-    const ImageData image_data = extract_image_text_data(path);
-
-    Clusters clusters = find_clusters(image_data);
-    update_binary_mask_with_largest_cluster(clusters);
-	FILE* file3 = fopen("test", "w");
-    if (file3 == NULL) {
-        perror("Error opening file");
-    }
-
-    for (int i = 0; i < image_data->height; i++) {
-        for (int j = 0; j < image_data->width; j++) {
-            fprintf(file3, "%d ", clusters->binary_mask[i][j]);
-        }
-        fprintf(file3, "\n");
-    }
-
-
-    fclose(file3);
-
-    fclose(file);
-    find_clusters_attributes(clusters);
-    display_clusters(clusters);
-
 
     FILE *file2 = fopen("result.txt", "w");
     if (!file2) {
@@ -45,22 +22,70 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
+    FILE* file3 = fopen("test", "w");
+	if (file3 == NULL) {
+        perror("Error opening file");
+    }
+
+    const ImageData image_data = extract_image_text_data(path);
+
+    Clusters clusters = find_clusters(image_data);
 
 
-    int cluster_count = number_clusters(clusters);
-    fprintf(file2, "%d\n", cluster_count);
+	if (clusters != NULL) {
 
-    Clusters current_cluster = clusters;
-    while (current_cluster != NULL) {
-        fprintf(file2, "%s %d %d %d\n", color_to_string(current_cluster->color),
-                current_cluster->mid_x, current_cluster->mid_y, current_cluster->radius);
-        current_cluster = current_cluster->next;
+    	for (int i = 0; i < image_data->height; i++) {
+        	for (int j = 0; j < image_data->width; j++) {
+            	fprintf(file3, "%d ", clusters->binary_mask[i][j]);
+        	}
+        	fprintf(file3, "\n");
+    	}
+
+
+
+    	update_binary_mask_with_largest_cluster(clusters);
+
+
+
+    	display_clusters(clusters);
+    	printf("color code: %s\n", color_to_string(clusters->color));
+        printf("tu es le boss \n");
+        clusters = find_clusters_attributes(clusters);
+        printf("tu es le boss \n");
+    	display_clusters(clusters);
+
+
+        int cluster_count = number_clusters(clusters);
+		printf("number of clusters: %d\n", cluster_count);
+
+
+    	Clusters current_cluster = clusters;
+
+    	if (current_cluster != NULL) {
+          	fprintf(file2, "%d\n", cluster_count);
+    		while (current_cluster != NULL) {
+        		fprintf(file2, "%s %d %d %d\n", color_to_string(current_cluster->color),
+                		current_cluster->mid_x, current_cluster->mid_y, current_cluster->radius);
+        		current_cluster = current_cluster->next;
+       		}
+
+    	}else {
+		printf("tu es le boss \n");
+      	fprintf(file2, "");
+        }
+        free_clusters(clusters);
+   	}else {
+		printf("tu es le boss \n");
+      	fprintf(file2, "");
     }
 
 
-    fclose(file2);
 
-    free_clusters(clusters);
+
+	fclose(file);
+    fclose(file2);
+	fclose(file3);
+
     free_image_data(image_data);
 
     return 0;

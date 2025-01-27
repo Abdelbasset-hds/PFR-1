@@ -33,10 +33,10 @@ Clusters add_cluster(const Clusters clusters, const int width, const int height,
         free(new_clusters);
         return NULL;
     }
-    for (int i = 0; i < height; ++i) {
+    for (int i = 0; i < height; i++) {
         new_clusters->binary_mask[i] = malloc(width * sizeof(int));
         if (new_clusters->binary_mask[i] == NULL) {
-            for (int j = 0; j < i; ++j) {
+            for (int j = 0; j < i; j++) {
                 free(new_clusters->binary_mask[j]);
             }
             free(new_clusters->binary_mask);
@@ -45,8 +45,8 @@ Clusters add_cluster(const Clusters clusters, const int width, const int height,
         }
     }
 
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
             new_clusters->binary_mask[i][j] = binary_mask[i][j];
 
         }
@@ -75,8 +75,10 @@ int number_clusters(const Clusters clusters) {
     return number_clusters;
 }
 
-void find_clusters_attributes(const Clusters clusters) {
+
+Clusters find_clusters_attributes( Clusters clusters) {
     Clusters current = clusters;
+    Clusters daron = NULL;
     while (current != NULL) {
         int min_x = current->height;
         int min_y = current->width;
@@ -101,13 +103,43 @@ void find_clusters_attributes(const Clusters clusters) {
         printf("%d %d %d %d\n", min_x, min_y, max_x, max_y);
         current->mid_x = min_x + (max_x - min_x) / 2;
         current->mid_y = min_y + (max_y - min_y) / 2;
+
         const int radius_x = (max_x - min_x) / 2;
         const int radius_y = (max_y - min_y) / 2;
         current->radius = (radius_x > radius_y) ? radius_x : radius_y;
 
-        current = current->next;
+		if (current->radius < 13) {
+                  if (daron == NULL) {
+                    Clusters temp = current->next;
+                    free(current);
+                    printf("zizi");
+                    return find_clusters_attributes(temp);
+                  }
+                  printf("caca");
+                  daron->next = current->next;
+                  free_clusters(current);
+                  printf("caca2.000000000000000000");
+                  return find_clusters_attributes(clusters);
+		}
+       	else {
+             if ((current->color) == ORANGE) {
+        		current->mid_y *= 1 - (current->radius * 0.0013) ;
+        		}
+        	if ((current->color) == YELLOW) {
+          		current->mid_y *= 1 + (current->radius * 0.0015) ;
+       	 }
+				if ((current->color) == ORANGE || current->color == YELLOW) {
+        	 	  current->radius *= 1.12 ;
+        	}
+             printf("cacadadadadadadada");
+             daron = current;
+             current = current->next;
+        }
     }
+    printf("cacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    return clusters;
 }
+
 
 void display_clusters(const Clusters clusters) {
     Clusters current = clusters;
