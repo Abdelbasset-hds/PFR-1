@@ -1,0 +1,32 @@
+[
+{
+  "directory": "C:/Users/Abdo/Desktop/PFR_1/build",
+  "command": "C:\\MinGW\\bin\\gcc.exe   -g -o CMakeFiles\\main.dir\\prancipal\\main.c.obj -c C:\\Users\\Abdo\\Desktop\\PFR_1\\prancipal\\main.c",
+  "file": "C:/Users/Abdo/Desktop/PFR_1/prancipal/main.c",
+  "output": "CMakeFiles/main.dir/prancipal/main.c.obj"
+},
+{
+  "directory": "C:/Users/Abdo/Desktop/PFR_1/build",
+  "command": "C:\\MinGW\\bin\\gcc.exe   -g -o CMakeFiles\\main_ti.dir\\fonction_traitement_image\\main_ti.c.obj -c C:\\Users\\Abdo\\Desktop\\PFR_1\\fonction_traitement_image\\main_ti.c",
+  "file": "C:/Users/Abdo/Desktop/PFR_1/fonction_traitement_image/main_ti.c",
+  "output": "CMakeFiles/main_ti.dir/fonction_traitement_image/main_ti.c.obj"
+},
+{
+  "directory": "C:/Users/Abdo/Desktop/PFR_1/build",
+  "command": "C:\\MinGW\\bin\\gcc.exe   -g -o CMakeFiles\\main_ti.dir\\fonction_traitement_image\\cluster.c.obj -c C:\\Users\\Abdo\\Desktop\\PFR_1\\fonction_traitement_image\\cluster.c",
+  "file": "C:/Users/Abdo/Desktop/PFR_1/fonction_traitement_image/cluster.c",
+  "output": "CMakeFiles/main_ti.dir/fonction_traitement_image/cluster.c.obj"
+},
+{
+  "directory": "C:/Users/Abdo/Desktop/PFR_1/build",
+  "command": "C:\\MinGW\\bin\\gcc.exe   -g -o CMakeFiles\\main_ti.dir\\fonction_traitement_image\\file_operations.c.obj -c C:\\Users\\Abdo\\Desktop\\PFR_1\\fonction_traitement_image\\file_operations.c",
+  "file": "C:/Users/Abdo/Desktop/PFR_1/fonction_traitement_image/file_operations.c",
+  "output": "CMakeFiles/main_ti.dir/fonction_traitement_image/file_operations.c.obj"
+},
+{
+  "directory": "C:/Users/Abdo/Desktop/PFR_1/build",
+  "command": "C:\\MinGW\\bin\\gcc.exe   -g -o CMakeFiles\\main_ti.dir\\fonction_traitement_image\\image_process.c.obj -c C:\\Users\\Abdo\\Desktop\\PFR_1\\fonction_traitement_image\\image_process.c",
+  "file": "C:/Users/Abdo/Desktop/PFR_1/fonction_traitement_image/image_process.c",
+  "output": "CMakeFiles/main_ti.dir/fonction_traitement_image/image_process.c.obj"
+}
+]

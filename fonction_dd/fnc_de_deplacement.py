@@ -5,7 +5,10 @@ import tkinter as tk
 import speech_recognition as sr
 from tkinter import font
 from PIL import Image, ImageTk
+import shutil
+from tkinter import filedialog, font 
 import filtre
+import subprocess
 
 
 
@@ -60,8 +63,77 @@ def rotate_image(filename, angle):
     rotated_img.save(rotated_filename)  # Save the rotated image
     return rotated_filename
 
+def analyser_image():
+    # Ouvrir une boîte de dialogue pour sélectionner une image
+    file_path = filedialog.askopenfilename(filetypes=[("Text files", "*.txt")])
+    if file_path:
+        executer_main2(file_path)
+
+
+
+
+
 def afficher_message(message) :
     message_label.config(text=message)
+
+def executer_main2(image_path):
+    # Vérifiez que l'image existe
+    if not os.path.exists(image_path):
+        afficher_message(f"Erreur : L'image {image_path} est introuvable.")
+        return
+    
+    # Définir le chemin vers l'exécutable main_ti dans le répertoire build
+    current_directory = os.path.dirname(__file__)  # Répertoire actuel du script
+    build_directory = os.path.join(current_directory, "../build")
+    chemin_executable = os.path.join(build_directory, "main_ti.exe")  # Chemin relatif vers main_ti
+    
+    if not os.path.exists(chemin_executable):
+        afficher_message("Erreur : L'exécutable 'main_ti' est introuvable. Compilez d'abord le code C.")
+        return
+
+    # Copier le fichier sélectionné dans le répertoire build
+    try:
+        fichier_destination = os.path.join(build_directory, os.path.basename(image_path))
+        shutil.copy(image_path, fichier_destination)
+    except Exception as e:
+        afficher_message(f"Erreur lors de la copie du fichier dans le répertoire 'build' : {e}")
+        return
+    
+    try:
+        # Exécuter main_ti avec le fichier copié
+        resultat = subprocess.run(
+            [chemin_executable, os.path.basename(image_path)],
+            text=True,
+            capture_output=True,
+            cwd=build_directory  # Change le répertoire courant pour build
+        )
+        
+        # Vérifiez si main_ti s'est exécuté correctement
+        if resultat.returncode == 0:
+            afficher_message("Analyse d'image terminée.")
+            lire_resultats()
+        else:
+            afficher_message(f"Erreur lors de l'exécution :\n{resultat.stderr}")
+    except Exception as e:
+        afficher_message(f"Erreur : {e}")
+
+
+def lire_resultats():
+    # Chemin vers le fichier result.txt
+    result_path = os.path.join(current_directory, "../../result.txt")
+    
+    if not os.path.exists(result_path):
+        afficher_message("Erreur : Le fichier 'result.txt' est introuvable.")
+        return
+    
+    try:
+        # Lire le contenu de result.txt et l'afficher
+        with open(result_path, "r") as file:
+            contenu = file.read()
+            afficher_message(f"Résultats de l'analyse :\n{contenu}")
+    except Exception as e:
+        afficher_message(f"Erreur lors de la lecture des résultats : {e}")
+
 
 def deplacement() :
       commande = entry_commande.get()
@@ -86,7 +158,7 @@ def deplacement() :
         elif commande_filtre[i] == "tourne_gch" :
             new_heading = (robot.heading() + commande_filtre[i+1]) % 360
             robot.setheading(new_heading)
-            rotated_image = rotate_image(r"C:\\Users\\Abdo\\Desktop\\PFR_1\\fonction_dd\\voiture.gif", new_heading)
+            rotated_image = rotate_image(voiture, new_heading)
             if rotated_image:
                 turtle_screen.addshape(rotated_image)  # Register the rotated image as a shape
                 robot.shape(rotated_image)
@@ -94,7 +166,7 @@ def deplacement() :
         elif commande_filtre[i] == "tourne_dr" :
             new_heading = (robot.heading() - commande_filtre[i+1]) % 360
             robot.setheading(new_heading)
-            rotated_image = rotate_image(r"C:\\Users\\Abdo\\Desktop\\PFR_1\\fonction_dd\\voiture.gif", new_heading)
+            rotated_image = rotate_image(voiture, new_heading)
             if rotated_image:
                 turtle_screen.addshape(rotated_image)  # Register the rotated image as a shape
                 robot.shape(rotated_image)
@@ -120,7 +192,11 @@ turtle_screen = turtle.TurtleScreen(canvas)
 turtle_screen.bgcolor("white")
 robot = turtle.RawTurtle(turtle_screen)
 
-voiture = r"C:\\Users\\Abdo\\Desktop\\PFR_1\\fonction_dd\\voiture.gif"
+current_directory = os.path.dirname(os.path.abspath(__file__))
+
+# Construire le chemin relatif pour l'image
+voiture = os.path.join(current_directory, "voiture.gif")
+#voiture = r"fonction_dd\\voiture.gif"
 if os.path.exists(voiture) :
      turtle_screen.addshape(voiture)
      robot.shape(voiture)
@@ -136,9 +212,10 @@ entry_commande = tk.Entry(frame_commande, width = 50, font=("Ariel",10))
 entry_commande.pack(pady=20)
 tk.Button(frame_commande, text="valider",command=deplacement).pack(pady=20)
 tk.Label(frame_commande, text="Commontaire", font=spicify_font,bg ="dodgerblue2",fg="white").pack(pady=40)
-message_label = tk.Label(frame_commande,text="",font=("Ariel",10),fg="red",bg="white",width=40,height=5,pady=2,wraplength=280)
+message_label = tk.Label(frame_commande,text="",font=("Ariel",10),fg="red",bg="white",width=40,height=10,pady=2,wraplength=280)
 message_label.pack(pady=2)
 
+tk.Button(frame_commande, text="Analyser une image", command=analyser_image).pack(pady=10)
 environnement(500)
 
 root.mainloop()

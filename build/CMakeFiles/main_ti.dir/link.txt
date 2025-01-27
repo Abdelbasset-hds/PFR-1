@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\main_ti.dir/objects.a
+C:\MinGW\bin\ar.exe qc CMakeFiles\main_ti.dir/objects.a @CMakeFiles\main_ti.dir\objects1.rsp
+C:\MinGW\bin\gcc.exe -g -mconsole -Wl,--whole-archive CMakeFiles\main_ti.dir/objects.a -Wl,--no-whole-archive -o main_ti.exe -Wl,--out-implib,libmain_ti.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\main_ti.dir\linkLibs.rsp

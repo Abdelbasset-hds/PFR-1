@@ -1,0 +1,1 @@
+chemin_executable = os.path.join(current_directory, "PFR.exe")

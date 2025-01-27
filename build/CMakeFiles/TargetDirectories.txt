@@ -1,0 +1,4 @@
+C:/Users/Abdo/Desktop/PFR_1/build/CMakeFiles/main.dir
+C:/Users/Abdo/Desktop/PFR_1/build/CMakeFiles/main_ti.dir
+C:/Users/Abdo/Desktop/PFR_1/build/CMakeFiles/edit_cache.dir
+C:/Users/Abdo/Desktop/PFR_1/build/CMakeFiles/rebuild_cache.dir
