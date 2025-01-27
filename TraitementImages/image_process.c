@@ -126,19 +126,16 @@ void quantize_image(const ImageData image, const int n) {
 void get_thresholds(const Color color, int thresholds[6]) {
     switch (color) {
         case ORANGE:
-          	printf("passage orange\n :");
             thresholds[0] = 92; thresholds[1] = 250; // Red Min/Max
             thresholds[2] = 22; thresholds[3] = 70; // Green Min/Max
             thresholds[4] = 2; thresholds[5] = 60; // Blue Min/Max
         break;
         case BLUE:
-          	printf("passage bleu :");
             thresholds[0] = 3; thresholds[1] = 40; // Red Min/Max
             thresholds[2] = 30; thresholds[3] = 100; // Green Min/Max
             thresholds[4] = 68; thresholds[5] = 200; // Blue Min/Max
         break;
         case YELLOW:
-          	printf("passage yellow\n :");
             thresholds[0] = 150; thresholds[1] = 255; // Red Min/Max
             thresholds[2] = 160; thresholds[3] = 255; // Green Min/Max
             thresholds[4] = 13; thresholds[5] = 90; // Blue Min/Max
@@ -151,15 +148,8 @@ void get_thresholds(const Color color, int thresholds[6]) {
 Clusters find_clusters(const ImageData image) {
     Clusters clusters = init_clusters();
     for (Color color = ORANGE; color <= YELLOW; color++) {
-        printf("passage %s : ", color_to_string(color));
         int thresholds[6];
         get_thresholds(color, thresholds);
-        printf(" %d a",thresholds[0]);
-        printf(" %d a",thresholds[1]);
-        printf(" %d a",thresholds[2]);
-        printf(" %d a",thresholds[3]);
-        printf(" %d a",thresholds[4]);
-        printf(" %d a",thresholds[5]);
         int number_pixels = 0;
 
         int** binary_mask = malloc(image->height * sizeof(int*));
@@ -190,7 +180,6 @@ Clusters find_clusters(const ImageData image) {
                 }
             }
         }
-        printf("\n nombre pixel : %d, color : %s \n",number_pixels, color_to_string(color));
 
         if (number_pixels > 0 ) {
             clusters = add_cluster(clusters, image->width, image->height, number_pixels, binary_mask, color);

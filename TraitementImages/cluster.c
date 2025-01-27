@@ -100,7 +100,6 @@ Clusters find_clusters_attributes( Clusters clusters) {
                 }
             }
         }
-        printf("%d %d %d %d\n", min_x, min_y, max_x, max_y);
         current->mid_x = min_x + (max_x - min_x) / 2;
         current->mid_y = min_y + (max_y - min_y) / 2;
 
@@ -112,13 +111,10 @@ Clusters find_clusters_attributes( Clusters clusters) {
                   if (daron == NULL) {
                     Clusters temp = current->next;
                     free(current);
-                    printf("zizi");
                     return find_clusters_attributes(temp);
                   }
-                  printf("caca");
                   daron->next = current->next;
                   free_clusters(current);
-                  printf("caca2.000000000000000000");
                   return find_clusters_attributes(clusters);
 		}
        	else {
@@ -131,12 +127,10 @@ Clusters find_clusters_attributes( Clusters clusters) {
 				if ((current->color) == ORANGE || current->color == YELLOW) {
         	 	  current->radius *= 1.12 ;
         	}
-             printf("cacadadadadadadada");
              daron = current;
              current = current->next;
         }
     }
-    printf("cacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     return clusters;
 }
 
@@ -207,7 +201,6 @@ void update_binary_mask_with_largest_cluster(Clusters clusters) {
             for (int j = 0; j < width; j++) {
                 if (current->binary_mask[i][j] == 1 && !visited[i][j]) {
                     int size = dfs(current->binary_mask, visited, height, width, i, j);
-                    printf("\nsize : %d color : %s\n", size, color_to_string(current->color));
                     if (size > largest_size) {
                         largest_size = size;
                         largest_cluster_x = i;

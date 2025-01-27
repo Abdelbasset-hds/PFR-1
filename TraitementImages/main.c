@@ -8,7 +8,6 @@ int main(int argc, char *argv[]) {
     char path[1024];
     snprintf(path, sizeof(path), "%s", argv[1]);
 
-    printf("Tentative d'ouverture du fichier : %s\n", path);
 
     FILE* file = fopen(path, "rb");
     if (!file) {
@@ -47,16 +46,11 @@ int main(int argc, char *argv[]) {
 
 
 
-    	display_clusters(clusters);
-    	printf("color code: %s\n", color_to_string(clusters->color));
-        printf("tu es le boss \n");
         clusters = find_clusters_attributes(clusters);
-        printf("tu es le boss \n");
     	display_clusters(clusters);
 
 
         int cluster_count = number_clusters(clusters);
-		printf("number of clusters: %d\n", cluster_count);
 
 
     	Clusters current_cluster = clusters;
@@ -70,12 +64,10 @@ int main(int argc, char *argv[]) {
        		}
 
     	}else {
-		printf("tu es le boss \n");
       	fprintf(file2, "");
         }
         free_clusters(clusters);
    	}else {
-		printf("tu es le boss \n");
       	fprintf(file2, "");
     }
 

@@ -3,7 +3,7 @@ TARGET = PFR
 CC = gcc
 CFLAGS = -std=c11 -Wall
 
-SRCS = main.c file_operations.c image_process.c cluster.c
+SRCS = TraitementImages/main.c TraitementImages/file_operations.c TraitementImages/image_process.c TraitementImages/cluster.c
 OBJS = $(SRCS:.c=.o)
 
 $(TARGET): $(OBJS)
