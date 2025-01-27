@@ -28,16 +28,14 @@ def convert_coordinates(x, y, screen_width, screen_height):
 
 def main():
     # Dimensions de l'écran Turtle
-    screen_width = 300
-    screen_height = 300
+    screen_width = 600
+    screen_height = 600
 
     # Étape 2 : Configurer Turtle
     turtle.setup(width=screen_width, height=screen_height)
     turtle.title("Turtle avec image de fond")
 
-    # Définir l'image de fond (remplacer par le chemin de l'image GIF)
-    turtle.bgpic("IMG_5390.gif")
-
+    
     # Étape 3 : Lire les clusters depuis le fichier result.txt
     with open("result.txt", "r") as file:
         lines = file.readlines()
